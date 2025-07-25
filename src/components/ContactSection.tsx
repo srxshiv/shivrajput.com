@@ -41,10 +41,10 @@ export function ContactSection() {
 
 
   return (
-    <section id="contact" ref={ref} className="relative py-32 px-6">
+    <section id="contact" ref={ref} className="relative min-h-[70vh] py-32 px-6 overflow-hidden">
       <div className="max-w-6xl mx-auto">
-      <h2
-          className="pointer-events-none whitespace-nowrap absolute left-1/2 top-[38rem] -translate-x-1/2 text-[30vw] md:text-[12vw] font-heading3 text-black/15 dark:text-white/15 z-0 select-none tracking-tight leading-none"
+        <h2
+          className="pointer-events-none whitespace-nowrap absolute left-1/2 top-[48rem] md:top-[48rem] -translate-x-1/2 text-[12vw] font-heading3 text-black/15 dark:text-white/15 z-0 select-none tracking-tight leading-none"
           style={{
             transform: `translate(-50%, calc(-${scrollY * 0.3}px))`,
             transition: "transform 0.1s ease-out",
@@ -53,7 +53,7 @@ export function ContactSection() {
           GET IN TOUCH
         </h2>
 
-        <div>
+        <div className="mt-12">
           {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}

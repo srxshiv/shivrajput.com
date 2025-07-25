@@ -12,7 +12,7 @@ const experiences = [
     description: "Created a Portfolio Website for a client ",
     achievements: ["Only using Vanila html , css and javascript"],
     tech: ["Html", "CSS", "javascript"],
-  }
+  },
 ];
 
 export function ExperienceSection() {
@@ -31,20 +31,20 @@ export function ExperienceSection() {
   }, []);
 
   return (
-    <section id="experience" ref={ref} className="relative py-32 px-6">
+    <section id="experience" ref={ref} className="relative min-h-[100vh] py-32 px-6 overflow-hidden">
       <div className="max-w-4xl mx-auto">
         {/* Title Section */}
         <h2
-          className="pointer-events-none absolute left-1/2 top-[28rem] -translate-x-1/2 text-[30vw] md:text-[15vw] font-heading3 text-black/15 dark:text-white/15 z-0 select-none tracking-tight leading-none"
+          className="pointer-events-none absolute right-[140rem] top-0 -translate-x-1/2 text-[30vw] md:text-[20vw] font-heading3 text-black/15 dark:text-white/15 z-0 select-none tracking-tight leading-none"
           style={{
-            transform: `translate(-50%, calc(-${scrollY * 0.3}px))`,
+            transform: `translateX(calc(${scrollY * 1.7}px))`,
             transition: "transform 0.1s ease-out",
           }}
         >
           EXPERIENCE
         </h2>
 
-        <div className="relative">
+        <div className="relative md:mt-[10rem] mt-12">
           {/* Timeline line */}
           <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-0.5 h-full bg-border"></div>
 

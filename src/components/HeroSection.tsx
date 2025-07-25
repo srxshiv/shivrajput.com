@@ -4,23 +4,31 @@ import "../App.css";
 
 export function HeroSection() {
   const [isHovered, setIsHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [animationsComplete, setAnimationsComplete] = useState(false);
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
     const handleScroll = () => {
       setScrollY(window.scrollY);
     };
 
     window.addEventListener("scroll", handleScroll);
 
-    // Set animations as complete after the longest animation (1.2s)
     const timer = setTimeout(() => {
       setAnimationsComplete(true);
     }, 1300);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('resize', handleResize);
       clearTimeout(timer);
     };
   }, []);
@@ -61,65 +69,31 @@ export function HeroSection() {
           }
         }
 
-@keyframes slideInFromRight {
-  0% {
-    transform: translate(100%, -50%);
-    opacity: 0;
-  }
-  100% {
-    transform: translate(0, -50%);
-    opacity: 1;
-  }
-}
-
+        @keyframes slideInFromRight {
+          0% {
+            transform: translate(100%, -50%);
+            opacity: 0;
+          }
+          100% {
+            transform: translate(0, -50%);
+            opacity: 1;
+          }
+        }
 
         .animate-slide-top {
           animation: slideInFromTop 1s ease-out forwards;
-          animation-fill-mode: forwards;
         }
 
         .animate-slide-left {
           animation: slideInFromLeft 1s ease-out forwards;
-          animation-fill-mode: forwards;
-        }
-
-        .animate-slide-bottom {
-          animation: slideInFromBottom 1.2s ease-out forwards;
-          animation-fill-mode: forwards;
-        }
-
-        .animate-slide-right {
-          animation: slideInFromRight 1.1s ease-out forwards;
-          animation-fill-mode: forwards;
-        }
-
-        /* Remove animations after they complete to allow transforms */
-        .animate-slide-top {
-          animation: slideInFromTop 1s ease-out forwards;
-        }
-        .animate-slide-top.animation-complete {
-          animation: none;
-        }
-
-        .animate-slide-left {
-          animation: slideInFromLeft 1.4s ease-out forwards;
-        }
-        .animate-slide-left.animation-complete {
-          animation: none;
         }
 
         .animate-slide-bottom {
           animation: slideInFromBottom 1.2s ease-out forwards;
         }
-        .animate-slide-bottom.animation-complete {
-          animation: none;
-        }
 
         .animate-slide-right {
           animation: slideInFromRight 1.1s ease-out forwards;
-        }
-        .animate-slide-right.animation-complete {
-          animation: none;
         }
       `}</style>
 
@@ -127,77 +101,79 @@ export function HeroSection() {
         id="home"
         className="relative min-h-screen flex items-center justify-center overflow-hidden transition-colors duration-500"
       >
-        <div className="absolute top-[6vh] right-5 transform -translate-x-1/2 z-30">
+        {/* CV Download Button - Mobile Adjusted */}
+        <div className="absolute top-[6vh] md:top-[6vh] right-3 md:right-5 transform md:-translate-x-1/2 z-30">
           <a
             href="https://drive.google.com/file/d/1WhyRuLk5zqbm-JvjEcVx7-rJP3fah3OS/view?usp=share_link"
             target="_blank"
-            className="bg-emerald-400/80 hover:bg-emerald-500 text-black dark:text-white px-5 py-2 rounded-lg font-medium shadow transition duration-300 hover:shadow-lg hover:shadow-emerald-400/60"
+            className="bg-emerald-400/80 hover:bg-emerald-500 text-black dark:text-white px-3 py-2 md:px-5 md:py-2 rounded-lg text-sm md:text-base font-medium shadow transition duration-300 hover:shadow-lg hover:shadow-emerald-400/60"
           >
             Download CV
           </a>
         </div>
 
-        {/* Background Giant Name */}
+        {/* Background Giant Name - Mobile Adjusted */}
         <h1
-          className={`absolute text-[25vw] md:text-[20vw] font-heading3 text-black/15 dark:text-white/15 z-0 select-none tracking-tight leading-none text-center ${
+          className={`absolute max-sm:top-[40vh] text-[20vw] md:text-[20vw] font-heading3 text-black/15 dark:text-white/15 z-0 select-none tracking-tight leading-none text-center ${
             !animationsComplete ? "animate-slide-top" : ""
           }`}
           style={{
-            transform: `translateY(-${scrollY * 0.7}px)`,
+            transform: `translateY(-${scrollY * 0.5}px)`,
             transition: "transform 0.1s ease-out",
           }}
         >
           SHIV RAJPUT
         </h1>
 
-        {/* Left Side Hover About */}
+        {/* Left Side Hover About - Mobile Adjusted */}
         <div
-          className={`absolute left-0 top-0 h-full w-full md:w-1/2 flex items-center z-20 pointer-events-none ${
+          className={`absolute left-0 top-0 h-full w-full flex items-center z-20 pointer-events-none ${
             !animationsComplete ? "animate-slide-left" : ""
           }`}
           style={{
-            transform: `translateX(-${scrollY * 0.5}px)`,
+            transform: isMobile ? 'none' : `translateX(-${scrollY * 0.5}px)`,
             transition: "transform 0.1s ease-out",
           }}
         >
           <div
-            className="relative ml-8 pointer-events-auto"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            className="relative ml-4 md:ml-8 pointer-events-auto"
+            onMouseEnter={() => !isMobile && setIsHovered(true)}
+            onMouseLeave={() => !isMobile && setIsHovered(false)}
+            onClick={() => isMobile && setIsHovered(!isHovered)}
           >
             <div className="relative cursor-pointer group">
-              <div className="w-4 h-24 bg-gradient-to-b from-emerald-300 to-blue-400 rounded-full shadow-lg shadow-emerald-300/60 group-hover:shadow-emerald-300/90 transition-all duration-10 group-hover:scale-110 animate-pulse"></div>
+              <div className="w-3 h-16 md:w-4 md:h-24 bg-gradient-to-b from-emerald-300 to-blue-400 rounded-full shadow-lg shadow-emerald-300/60 group-hover:shadow-emerald-300/90 transition-all duration-10 group-hover:scale-110 animate-pulse"></div>
               <div
-                className={`absolute left-12 top-1/2 transform -translate-y-1/2 transition-all duration-300 ${
+                className={`absolute left-8 md:left-12 top-1/2 transform -translate-y-1/2 transition-all duration-300 ${
                   isHovered ? "opacity-0" : "opacity-100"
                 }`}
               >
-                <span className="px-3 py-1 rounded-lg bg-white/10 dark:bg-white/10 backdrop-blur-lg border border-white/20 shadow">
-                  <span className="text-emerald-400 text-lg font-mono font-semibold whitespace-nowrap animate-pulse">
-                    &lt;hover to decode/&gt;
+                <span className="px-2 py-1 md:px-3 md:py-1 rounded-lg bg-white/10 dark:bg-white/10 backdrop-blur-lg border border-white/20 shadow">
+                  <span className="text-emerald-400 text-sm md:text-lg font-mono font-semibold whitespace-nowrap animate-pulse">
+                    {isMobile ? '<tap to decode/>' : '<hover to decode/>'}
                   </span>
                 </span>
               </div>
             </div>
 
             <div
-              className={`absolute left-10 top-1/2 transform -translate-y-1/2 transition-all duration-500 ${
+              className={`absolute left-6 md:left-10 top-1/2 transform -translate-y-1/2 transition-all duration-500 ${
                 isHovered
                   ? "translate-x-0 opacity-100"
                   : "-translate-x-full opacity-0"
               }`}
             >
-              <div className="code-block rounded-xl p-8 w-96 md:w-[500px] backdrop-blur-md bg-white/60 dark:bg-white/10 border border-zinc-300 dark:border-white/20 shadow-md transition-all text-zinc-800 dark:text-slate-200">
-                <div className="flex items-center gap-3 mb-6 border-b border-emerald-400/20 pb-3">
-                  <div className="w-4 h-4 rounded-full bg-red-400"></div>
-                  <div className="w-4 h-4 rounded-full bg-yellow-400"></div>
-                  <div className="w-4 h-4 rounded-full bg-green-400"></div>
-                  <span className="text-slate-600 dark:text-slate-400 text-sm font-mono ml-3">
+              <div className="code-block rounded-xl p-4 md:p-8 w-72 md:w-[500px] backdrop-blur-md bg-white/60 dark:bg-white/10 border border-zinc-300 dark:border-white/20 shadow-md transition-all text-zinc-800 dark:text-slate-200">
+                <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6 border-b border-emerald-400/20 pb-2 md:pb-3">
+                  <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-red-400"></div>
+                  <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-yellow-400"></div>
+                  <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-green-400"></div>
+                  <span className="text-slate-600 dark:text-slate-400 text-xs md:text-sm font-mono ml-2 md:ml-3">
                     about-me.js
                   </span>
                 </div>
 
-                <div className="font-mono text-base md:text-lg space-y-3">
+                <div className="font-mono text-sm md:text-base space-y-2 md:space-y-3">
                   <div className="text-purple-600 dark:text-purple-400">
                     <span className="typewriter-text">const</span>{" "}
                     <span className="text-blue-600 dark:text-blue-400">
@@ -205,7 +181,7 @@ export function HeroSection() {
                     </span>{" "}
                     = {"{"}
                   </div>
-                  <div className="ml-6 space-y-2">
+                  <div className="ml-4 md:ml-6 space-y-1 md:space-y-2">
                     <div>
                       <span className="text-blue-600 dark:text-blue-400">
                         name
@@ -269,8 +245,8 @@ export function HeroSection() {
                   <div className="text-purple-600 dark:text-purple-400">
                     {"}"}
                   </div>
-                  <div className="mt-6 pt-3 border-t border-emerald-400/20">
-                    <div className="text-slate-600 dark:text-slate-400 text-sm">
+                  <div className="mt-4 md:mt-6 pt-2 md:pt-3 border-t border-emerald-400/20">
+                    <div className="text-slate-600 dark:text-slate-400 text-xs md:text-sm">
                       <span className="text-emerald-400">// </span>
                       Ready to collaborate and build amazing things together
                       <span className="terminal-cursor"></span>
@@ -282,45 +258,45 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Avatar at Bottom - Fixed */}
+        {/* Avatar at Bottom - Mobile Adjusted */}
         <div
           className={`absolute bottom-0 w-full flex justify-center z-10 pointer-events-none ${
             !animationsComplete ? "animate-slide-bottom" : ""
           }`}
           style={{
-            transform: `translateY(${scrollY * 0.7}px)`,
+            transform: `translateY(${scrollY * 0.5}px)`,
             transition: "transform 0.1s ease-out",
           }}
         >
           <img
             src="/avatar.png"
             alt="avatar"
-            className="h-[75vh] max-w-full object-contain grayscale opacity-90 pointer-events-none"
+            className="h-[60vh] md:h-[75vh] max-w-full object-contain grayscale opacity-90 pointer-events-none"
           />
         </div>
 
-        {/* Socials */}
+        {/* Socials - Mobile Adjusted */}
         <div
-          className={`absolute right-4 top-1/2 z-30 ${
+          className={`absolute right-2 md:right-4 top-1/2 z-30 ${
             !animationsComplete ? "animate-slide-right" : ""
           }`}
           style={{
-            transform: `translate(${scrollY * 0.3}px, -50%)`,
+            transform: isMobile ? 'translate(0, -50%)' : `translate(${scrollY * 0.3}px, -50%)`,
             transition: "transform 0.1s ease-out",
           }}
         >
-          <div className="backdrop-blur-md bg-white/40 dark:bg-white/5 p-4 rounded-xl border border-zinc-300 dark:border-white/10 shadow-md flex flex-col items-center space-y-6">
+          <div className="backdrop-blur-md bg-white/40 dark:bg-white/5 p-2 md:p-4 rounded-lg md:rounded-xl border border-zinc-300 dark:border-white/10 shadow-md flex flex-col items-center space-y-3 md:space-y-6">
             {[
-              { href: "https://github.com/srxshiv", icon: <Github /> },
-              { href: "https://linkedin.com/in/srxshiv", icon: <Linkedin /> },
-              { href: "https://instagram.com/srxshiv", icon: <Instagram /> },
-              { href: "https://twitter.com/srxshiv", icon: <Twitter /> },
+              { href: "https://github.com/srxshiv", icon: <Github className="w-4 h-4 md:w-5 md:h-5" /> },
+              { href: "https://linkedin.com/in/srxshiv", icon: <Linkedin className="w-4 h-4 md:w-5 md:h-5" /> },
+              { href: "https://instagram.com/srxshiv", icon: <Instagram className="w-4 h-4 md:w-5 md:h-5" /> },
+              { href: "https://twitter.com/srxshiv", icon: <Twitter className="w-4 h-4 md:w-5 md:h-5" /> },
             ].map(({ href, icon }, idx) => (
               <a
                 key={idx}
                 href={href}
                 target="_blank"
-                className="text-zinc-800 dark:text-white hover:text-emerald-400 transition-transform duration-200 hover:scale-150 hover:-translate-y-1"
+                className="text-zinc-800 dark:text-white hover:text-emerald-400 transition-transform duration-200 hover:scale-125 md:hover:scale-150 hover:-translate-y-1"
               >
                 {icon}
               </a>
@@ -331,3 +307,7 @@ export function HeroSection() {
     </>
   );
 }
+
+
+//
+
