@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Building, Calendar, MapPin } from "lucide-react";
 
 const experiences = [
@@ -10,10 +10,8 @@ const experiences = [
     duration: "2022 - 2022",
     location: "Remote",
     description: "Created a Portfolio Website for a client ",
-    achievements: [
-      "Only using Vanila html , css and javascript",
-    ],
-    tech: ["Html", "CSS", "javascript"]
+    achievements: ["Only using Vanila html , css and javascript"],
+    tech: ["Html", "CSS", "javascript"],
   }
 ];
 
@@ -21,21 +19,30 @@ export function ExperienceSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  return (
-    <section id="experience" ref={ref} className="py-32 px-6">
-      <div className="max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-6xl font-thin text-text-primary mb-12 tracking-wide">
-            Experience
-          </h2>
-          <div className="w-20 h-1 bg-accent-blue mx-auto mb-8"></div>
+  const [scrollY, setScrollY] = useState(0);
 
-        </motion.div>
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <section id="experience" ref={ref} className="relative py-32 px-6">
+      <div className="max-w-4xl mx-auto">
+        {/* Title Section */}
+        <h2
+          className="pointer-events-none absolute left-1/2 top-[28rem] -translate-x-1/2 text-[30vw] md:text-[15vw] font-heading3 text-black/15 dark:text-white/15 z-0 select-none tracking-tight leading-none"
+          style={{
+            transform: `translate(-50%, calc(-${scrollY * 0.3}px))`,
+            transition: "transform 0.1s ease-out",
+          }}
+        >
+          EXPERIENCE
+        </h2>
 
         <div className="relative">
           {/* Timeline line */}
@@ -48,14 +55,18 @@ export function ExperienceSection() {
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: index * 0.2 }}
               className={`relative flex items-center mb-16 ${
-                index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
               }`}
             >
               {/* Timeline dot */}
               <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-accent-blue rounded-full border-4 border-surface shadow-lg z-10"></div>
 
               {/* Content */}
-              <div className={`flex-1 ml-16 md:ml-0 ${index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'}`}>
+              <div
+                className={`flex-1 ml-16 md:ml-0 ${
+                  index % 2 === 0 ? "md:pr-8" : "md:pl-8"
+                }`}
+              >
                 <motion.div
                   whileHover={{ scale: 1.02, y: -5 }}
                   className="bg-surface border border-border rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300"
@@ -92,7 +103,10 @@ export function ExperienceSection() {
                     </h4>
                     <ul className="space-y-2">
                       {exp.achievements.map((achievement, i) => (
-                        <li key={i} className="flex items-start gap-2 text-text-secondary">
+                        <li
+                          key={i}
+                          className="flex items-start gap-2 text-text-secondary"
+                        >
                           <span className="w-1.5 h-1.5 bg-accent-blue rounded-full mt-2 flex-shrink-0"></span>
                           {achievement}
                         </li>

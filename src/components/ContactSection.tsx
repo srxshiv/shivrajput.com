@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef , useEffect , useState} from "react";
 import { Mail, Phone, MapPin, Github, Linkedin, Twitter } from "lucide-react";
 
 const contactInfo = [
@@ -28,21 +28,30 @@ const contactInfo = [
 export function ContactSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [scrollY , setScrollY] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
 
   return (
-    <section id="contact" ref={ref} className="py-32 px-6">
+    <section id="contact" ref={ref} className="relative py-32 px-6">
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+      <h2
+          className="pointer-events-none whitespace-nowrap absolute left-1/2 top-[38rem] -translate-x-1/2 text-[30vw] md:text-[12vw] font-heading3 text-black/15 dark:text-white/15 z-0 select-none tracking-tight leading-none"
+          style={{
+            transform: `translate(-50%, calc(-${scrollY * 0.3}px))`,
+            transition: "transform 0.1s ease-out",
+          }}
         >
-          <h2 className="text-4xl md:text-6xl font-thin text-text-primary mb-12 tracking-wide">
-            Get in touch
-          </h2>
-          <div className="w-20 h-1 bg-accent-blue mx-auto mb-8"></div>
-        </motion.div>
+          GET IN TOUCH
+        </h2>
 
         <div>
           {/* Contact Info */}
