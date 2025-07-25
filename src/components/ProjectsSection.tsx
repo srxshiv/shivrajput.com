@@ -63,6 +63,21 @@ const projects = [
     github: "https://github.com/srxshiv/BrokeNoMore.git",
     live: "https://broke-no-more-seven.vercel.app",
   },
+  {
+    title: "Github-Profile-Analyzer",
+    image:
+      "https://res.cloudinary.com/ddyehcaeo/image/upload/v1753450510/Screenshot_2025-07-25_at_7.04.02_PM_kqoyag.png",
+    description:
+      "A tool to see all the repoistories of a user and their contributions history visually.",
+    techstack: [
+      "React",
+      "Tailwind",
+      "TypeScript",
+      "shadcn",
+    ],
+    github: "https://github.com/srxshiv/Github-Profile-Analyzer.git",
+    live: "https://gitprofileanalyzer.vercel.app",
+  },
 ];
 
 const techIcons: Record<string, string> = {
@@ -319,7 +334,7 @@ export function ProjectsSection() {
                   });
                 }
               }}
-              className="flex absolute left-0 md:left-2 top-1/2 -translate-y-1/2 z-20 p-1 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-black/70 shadow-lg backdrop-blur-md hover:bg-white dark:hover:bg-black transition-colors duration-200"
+              className="flex absolute left-0 md:left-2 top-1/2 -translate-y-1/2 z-20 p-1 rounded-full border border-black/10 dark:border-white/10 shadow-lg hover:bg-white dark:hover:bg-black transition-colors duration-200"
               aria-label="Previous project"
             >
               <ChevronLeft size={24} className="text-black dark:text-white drop-shadow" />
@@ -414,7 +429,7 @@ export function ProjectsSection() {
                   });
                 }
               }}
-              className="flex absolute right-0 md:right-2 top-1/2 -translate-y-1/2 z-20 p-1 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-black/70 shadow-lg backdrop-blur-md hover:bg-white dark:hover:bg-black transition-colors duration-200"
+              className="flex absolute right-0 md:right-2 top-1/2 -translate-y-1/2 z-20 p-1 rounded-full border border-black/10 dark:border-white/10  shadow-lg hover:bg-white dark:hover:bg-black transition-colors duration-200"
               aria-label="Next project"
             >
               <ChevronRight size={24} className="text-black dark:text-white drop-shadow" />
