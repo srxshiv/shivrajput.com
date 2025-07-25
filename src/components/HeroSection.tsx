@@ -12,9 +12,9 @@ export function HeroSection() {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     handleResize();
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     const handleScroll = () => {
       setScrollY(window.scrollY);
@@ -28,7 +28,7 @@ export function HeroSection() {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
       clearTimeout(timer);
     };
   }, []);
@@ -102,11 +102,11 @@ export function HeroSection() {
         className="relative min-h-screen flex items-center justify-center overflow-hidden transition-colors duration-500"
       >
         {/* CV Download Button - Mobile Adjusted */}
-        <div className="absolute top-[6vh] md:top-[6vh] right-3 md:right-5 transform md:-translate-x-1/2 z-30">
+        <div className="absolute top-[5vh] md:top-[6vh] right-3 md:right-5 transform md:-translate-x-1/2 z-30">
           <a
             href="https://drive.google.com/file/d/1WhyRuLk5zqbm-JvjEcVx7-rJP3fah3OS/view?usp=share_link"
             target="_blank"
-            className="bg-emerald-400/80 hover:bg-emerald-500 text-black dark:text-white px-3 py-2 md:px-5 md:py-2 rounded-lg text-sm md:text-base font-medium shadow transition duration-300 hover:shadow-lg hover:shadow-emerald-400/60"
+            className="bg-emerald-400/80 hover:bg-emerald-600 text-black dark:text-white px-3 py-2 md:px-5 md:py-2 rounded-lg text-sm md:text-base font-medium shadow transition duration-300 hover:shadow-lg hover:shadow-emerald-400/60"
           >
             Download CV
           </a>
@@ -131,7 +131,7 @@ export function HeroSection() {
             !animationsComplete ? "animate-slide-left" : ""
           }`}
           style={{
-            transform: isMobile ? 'none' : `translateX(-${scrollY * 0.5}px)`,
+            transform: isMobile ? "none" : `translateX(-${scrollY * 0.5}px)`,
             transition: "transform 0.1s ease-out",
           }}
         >
@@ -150,7 +150,7 @@ export function HeroSection() {
               >
                 <span className="px-2 py-1 md:px-3 md:py-1 rounded-lg bg-white/10 dark:bg-white/10 backdrop-blur-lg border border-white/20 shadow">
                   <span className="text-emerald-400 text-sm md:text-lg font-mono font-semibold whitespace-nowrap animate-pulse">
-                    {isMobile ? '<tap to decode/>' : '<hover to decode/>'}
+                    {isMobile ? "<tap to decode/>" : "<hover to decode/>"}
                   </span>
                 </span>
               </div>
@@ -163,7 +163,7 @@ export function HeroSection() {
                   : "-translate-x-full opacity-0"
               }`}
             >
-              <div className="code-block rounded-xl p-4 md:p-8 w-72 md:w-[500px] backdrop-blur-md bg-white/60 dark:bg-white/10 border border-zinc-300 dark:border-white/20 shadow-md transition-all text-zinc-800 dark:text-slate-200">
+              <div className="code-block rounded-xl p-4 md:p-8 w-72 md:w-[500px] backdrop-blur-lg bg-white/60 dark:bg-white/10 border border-zinc-300 dark:border-white/20 shadow-md transition-all text-zinc-800 dark:text-slate-200">
                 <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6 border-b border-emerald-400/20 pb-2 md:pb-3">
                   <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-red-400"></div>
                   <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-yellow-400"></div>
@@ -204,11 +204,33 @@ export function HeroSection() {
                     </div>
                     <div>
                       <span className="text-blue-600 dark:text-blue-400">
+                        education
+                      </span>
+                      :{" "}
+                      <span className="text-green-600 dark:text-green-400">
+                        "B.Tech in Computer Science"
+                      </span>
+                      ,
+                    </div>
+                    <div>
+                      <span className="text-blue-600 dark:text-blue-400">
+                        strengths
+                      </span>
+                      :{" "}
+                      <span className="text-green-600 dark:text-green-400">
+                        ["Problem Solving", "Creative Thinking", "Rapid
+                        Prototyping"]
+                      </span>
+                      ,
+                    </div>
+                    <div>
+                      <span className="text-blue-600 dark:text-blue-400">
                         passion
                       </span>
                       :{" "}
                       <span className="text-green-600 dark:text-green-400">
-                        "Building digital experiences"
+                        "Building things from scratch & turning ideas into
+                        products"
                       </span>
                       ,
                     </div>
@@ -218,7 +240,7 @@ export function HeroSection() {
                       </span>
                       :{" "}
                       <span className="text-green-600 dark:text-green-400">
-                        "Coding the future"
+                        "India (Remote-Friendly 🌍)"
                       </span>
                       ,
                     </div>
@@ -228,7 +250,7 @@ export function HeroSection() {
                       </span>
                       :{" "}
                       <span className="text-green-600 dark:text-green-400">
-                        "Open for opportunities"
+                        "Open for full-time, freelance, or startup collabs"
                       </span>
                       ,
                     </div>
@@ -238,7 +260,7 @@ export function HeroSection() {
                       </span>
                       :{" "}
                       <span className="text-green-600 dark:text-green-400">
-                        "Creating impactful solutions"
+                        "To solve real problems with clean code & bold ideas"
                       </span>
                     </div>
                   </div>
@@ -248,7 +270,7 @@ export function HeroSection() {
                   <div className="mt-4 md:mt-6 pt-2 md:pt-3 border-t border-emerald-400/20">
                     <div className="text-slate-600 dark:text-slate-400 text-xs md:text-sm">
                       <span className="text-emerald-400">// </span>
-                      Ready to collaborate and build amazing things together
+                      Let's build something unforgettable. Reach out anytime!
                       <span className="terminal-cursor"></span>
                     </div>
                   </div>
@@ -281,16 +303,30 @@ export function HeroSection() {
             !animationsComplete ? "animate-slide-right" : ""
           }`}
           style={{
-            transform: isMobile ? 'translate(0, -50%)' : `translate(${scrollY * 0.3}px, -50%)`,
+            transform: isMobile
+              ? "translate(0, -50%)"
+              : `translate(${scrollY * 0.3}px, -50%)`,
             transition: "transform 0.1s ease-out",
           }}
         >
           <div className="backdrop-blur-md bg-white/40 dark:bg-white/5 p-2 md:p-4 rounded-lg md:rounded-xl border border-zinc-300 dark:border-white/10 shadow-md flex flex-col items-center space-y-3 md:space-y-6">
             {[
-              { href: "https://github.com/srxshiv", icon: <Github className="w-4 h-4 md:w-5 md:h-5" /> },
-              { href: "https://linkedin.com/in/srxshiv", icon: <Linkedin className="w-4 h-4 md:w-5 md:h-5" /> },
-              { href: "https://instagram.com/srxshiv", icon: <Instagram className="w-4 h-4 md:w-5 md:h-5" /> },
-              { href: "https://twitter.com/srxshiv", icon: <Twitter className="w-4 h-4 md:w-5 md:h-5" /> },
+              {
+                href: "https://github.com/srxshiv",
+                icon: <Github className="w-4 h-4 md:w-5 md:h-5" />,
+              },
+              {
+                href: "https://linkedin.com/in/srxshiv",
+                icon: <Linkedin className="w-4 h-4 md:w-5 md:h-5" />,
+              },
+              {
+                href: "https://instagram.com/srxshiv",
+                icon: <Instagram className="w-4 h-4 md:w-5 md:h-5" />,
+              },
+              {
+                href: "https://twitter.com/srxshiv",
+                icon: <Twitter className="w-4 h-4 md:w-5 md:h-5" />,
+              },
             ].map(({ href, icon }, idx) => (
               <a
                 key={idx}
@@ -308,6 +344,4 @@ export function HeroSection() {
   );
 }
 
-
 //
-

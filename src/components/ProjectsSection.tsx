@@ -309,6 +309,23 @@ export function ProjectsSection() {
         ) : (
           // Carousel layout - Mobile Adjusted
           <div className="relative px-2 md:px-0">
+            {/* Left Arrow */}
+            <button 
+              onClick={() => {
+                if (carouselRef.current) {
+                  carouselRef.current.scrollBy({
+                    left: -carouselRef.current.offsetWidth * 0.8,
+                    behavior: 'smooth'
+                  });
+                }
+              }}
+              className="flex absolute left-0 md:left-2 top-1/2 -translate-y-1/2 z-20 p-1 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-black/70 shadow-lg backdrop-blur-md hover:bg-white dark:hover:bg-black transition-colors duration-200"
+              aria-label="Previous project"
+            >
+              <ChevronLeft size={24} className="text-black dark:text-white drop-shadow" />
+            </button>
+
+            {/* Carousel Content */}
             <div
               ref={carouselRef}
               className="flex overflow-x-auto scrollbar-hide pb-4 md:pb-6 gap-4 md:gap-6 snap-x snap-mandatory"
@@ -386,6 +403,22 @@ export function ProjectsSection() {
                 </motion.div>
               ))}
             </div>
+
+            {/* Right Arrow */}
+            <button 
+              onClick={() => {
+                if (carouselRef.current) {
+                  carouselRef.current.scrollBy({
+                    left: carouselRef.current.offsetWidth * 0.8,
+                    behavior: 'smooth'
+                  });
+                }
+              }}
+              className="flex absolute right-0 md:right-2 top-1/2 -translate-y-1/2 z-20 p-1 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-black/70 shadow-lg backdrop-blur-md hover:bg-white dark:hover:bg-black transition-colors duration-200"
+              aria-label="Next project"
+            >
+              <ChevronRight size={24} className="text-black dark:text-white drop-shadow" />
+            </button>
           </div>
         )}
 

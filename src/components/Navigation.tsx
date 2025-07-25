@@ -1,4 +1,5 @@
 import { ThemeToggle } from "./ThemeToggle";
+import { useState, useEffect } from "react";
 
 const navItems = [
   { label: "Home", href: "#home" },
@@ -8,23 +9,57 @@ const navItems = [
 ];
 
 export function Navigation() {
+  const [isMobile, setIsMobile] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
+      setIsOpen(false);
     }
   };
 
   return (
     <nav className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
+      {/* Main container with group class restored */}
       <div className="relative group">
-        {/* Central circle with refined typography */}
-        <div className="w-16 h-16 rounded-full bg-surface/90 backdrop-blur-md border border-border/30 shadow-lg flex items-center justify-center transition-all duration-300 group-hover:w-72 group-hover:h-72">
-          <span className="text-text-primary font-medium absolute opacity-100 group-hover:opacity-0 transition-opacity text-sm tracking-wider font-sans">
+        {/* Clickable area - separate from theme toggle */}
+        <div 
+  className={`absolute inset-0 z-10 ${isMobile ? 'block' : 'hidden group-hover:hidden'}`}
+  style={{ pointerEvents: isOpen ? 'none' : 'auto' }}
+  onClick={() => setIsOpen(!isOpen)}
+/>
+
+        
+        {/* Central circle */}
+        <div 
+          className={`w-16 h-16 rounded-full bg-surface/90 backdrop-blur-md border border-border/30 shadow-lg flex items-center justify-center transition-all duration-300 ${
+            isMobile ? (isOpen ? "w-72 h-72" : "") : "group-hover:w-72 group-hover:h-72"
+          }`}
+        >
+          {/* Menu label */}
+          <span 
+            className={`text-text-primary font-medium absolute transition-opacity text-sm tracking-wider font-sans ${
+              isMobile 
+                ? (isOpen ? "opacity-0" : "opacity-100")
+                : "opacity-100 group-hover:opacity-0"
+            }`}
+          >
             MENU
           </span>
           
-          {/* Circular navigation items with improved fonts */}
+          {/* Navigation items */}
           {navItems.map((item, index) => {
             const angle = (index * 90) - 45;
             const radius = 80;
@@ -33,7 +68,11 @@ export function Navigation() {
               <button
                 key={item.label}
                 onClick={() => scrollToSection(item.href)}
-                className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:scale-110"
+                className={`absolute transition-opacity duration-200 hover:scale-110 ${
+                  isMobile
+                    ? (isOpen ? "opacity-100" : "opacity-0")
+                    : "opacity-0 group-hover:opacity-100"
+                }`}
                 style={{
                   transform: `rotate(${angle}deg) translate(${radius}px) rotate(-${angle}deg)`,
                 }}
@@ -47,8 +86,15 @@ export function Navigation() {
             );
           })}
           
-          {/* Theme toggle */}
-          <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          {/* Theme toggle - now properly isolated */}
+          <div 
+            className={`absolute bottom-2 right-2 transition-opacity ${
+              isMobile
+                ? (isOpen ? "opacity-100" : "opacity-0")
+                : "opacity-0 group-hover:opacity-100"
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
             <ThemeToggle />
           </div>
         </div>
