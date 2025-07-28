@@ -4,10 +4,13 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  ChevronDown
 } from "lucide-react";
 import { useState, useRef } from "react";
 import { motion, useInView, useAnimation } from "framer-motion";
 import { useEffect } from "react";
+
+import '../App.css'
 
 const projects = [
   {
@@ -102,10 +105,9 @@ export function ProjectsSection() {
   const [isMobile, setIsMobile] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
+  const [isExpanded, setIsExpanded] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: false, margin: "-100px" });
-
-  const [activeIndex, setActiveIndex] = useState(0);
 
   const [scrollY, setScrollY] = useState(0);
 
@@ -251,77 +253,102 @@ export function ProjectsSection() {
         {showAllProjects ? (
           // Grid layout for all projects - Mobile Adjusted
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 px-2 md:px-6 lg:px-12">
-  {filteredProjects.map((project, index) => (
-    <motion.div
-      key={`${project.title}-${index}`}
-      initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: 0.2 + index * 0.08 }}
-      whileHover={{ y: isMobile ? 0 : -8 }}
-      className="group/item relative h-[300px] md:h-[400px] rounded-xl md:rounded-2xl overflow-hidden transition-transform duration-300 ease-out"
-    >
-      <img
-        src={project.image}
-        alt={project.title}
-        className="absolute inset-0 w-full h-full object-cover transition-all duration-500 filter blur-sm group-hover/item:blur-none group-hover/item:scale-105"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent transition-all duration-500 group-hover/item:bg-black/60" />
+  {filteredProjects.map((project, index) => {    
+    return (
+      <motion.div
+        key={`${project.title}-${index}`}
+        initial={{ opacity: 0, y: 50 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, delay: 0.2 + index * 0.08 }}
+        whileHover={{ y: isMobile ? 0 : -8 }}
+        className="group/item relative h-auto min-h-[300px] md:h-[400px] rounded-xl md:rounded-2xl overflow-hidden transition-transform duration-300 ease-out"
+      >
+        <img
+          src={project.image}
+          alt={project.title}
+          className="absolute inset-0 w-full h-full object-cover transition-all duration-500 filter blur-sm group-hover/item:blur-none group-hover/item:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent transition-all duration-500 group-hover/item:bg-black/60" />
 
-      <div className="absolute bottom-0 left-0 right-0 p-6 transition-padding duration-300 group-hover/item:pb-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.3 + index * 0.08 }}
-          className="text-white"
-        >
-          <h3 className="text-2xl font-semibold mb-2 transition-all duration-300 group-hover/item:mb-3 group-hover/item:-translate-y-1 [text-shadow:_0_1px_4px_rgba(0,0,0,0.5)]">
-            {project.title}
-          </h3>
-
-          <p className="text-black-300/90 mb-4 transition-all duration-300 group-hover:text-white group-hover:mb-5 group-hover:-translate-y-0.5 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]">
-            {project.description}
-          </p>
-
-          <div className="flex flex-wrap gap-2 mb-4 transition-all duration-300 group-hover/item:mb-5">
-            {project.techstack.map((tech) => (
-              <span
-                key={tech}
-                className="px-3 py-1 rounded-full bg-white/10 backdrop-blur text-xs transition-colors duration-300 group-hover/item:bg-white/20"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-
+        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 transition-all duration-300 group-hover/item:pb-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.3 + index * 0.08 + 0.2 }}
-            className="flex gap-4 opacity-0 group-hover/item:opacity-100 translate-y-2 group-hover/item:translate-y-0 transition-all duration-300"
+            transition={{ delay: 0.3 + index * 0.08 }}
+            className="text-white"
           >
-            <a
-              href={project.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition duration-200"
+            {/* Title - clickable only on mobile */}
+            <h3 
+              className="text-xl md:text-2xl font-semibold mb-2 transition-all duration-300 group-hover/item:mb-3 group-hover/item:-translate-y-1 [text-shadow:_0_1px_4px_rgba(0,0,0,0.5)] md:line-clamp-none"
+              onClick={() => isMobile && setIsExpanded(!isExpanded)}
             >
-              <ExternalLink size={16} />
-              Live
-            </a>
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-black/50 border border-white/30 rounded-full hover:bg-black transition duration-200"
+              {project.title}
+            </h3>
+
+            {/* Description - clickable only on mobile */}
+            <div 
+              className={`relative ${isMobile ? 'cursor-pointer' : ''}`}
+              onClick={() => isMobile && setIsExpanded(!isExpanded)}
             >
-              <Github size={16} />
-              Code
-            </a>
+              <p className={`
+                text-white/90 text-sm md:text-base mb-3 md:mb-4 
+                transition-all duration-300 group-hover:text-white 
+                group-hover:mb-5 group-hover:-translate-y-0.5 
+                [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]
+                ${isMobile && !isExpanded ? 'line-clamp-3' : ''}
+              `}>
+                {project.description}
+              </p>
+              {isMobile && !isExpanded && (
+                <div className="absolute bottom-0 right-0 shadow-lg rounded-full w-1/3 h-6 flex items-center justify-end p-4">
+                  <ChevronDown className="w-4 h-4" />
+                </div>
+              )}
+            </div>
+
+            {/* Tech stack - unchanged */}
+            <div className="flex flex-nowrap md:flex-wrap gap-2 mb-3 md:mb-4 transition-all duration-300 group-hover/item:mb-5 overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
+              {project.techstack.map((tech) => (
+                <span
+                  key={tech}
+                  className="flex-shrink-0 px-2 py-1 rounded-full bg-white/20 backdrop-blur text-xs transition-colors duration-300 group-hover/item:bg-white/30"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            {/* Buttons - unchanged */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.3 + index * 0.08 + 0.2 }}
+              className={`flex gap-3 ${isMobile ? 'opacity-100' : 'opacity-0 group-hover/item:opacity-100'} translate-y-0 md:translate-y-2 group-hover/item:translate-y-0 transition-all duration-300`}
+            >
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white text-black text-sm md:text-base rounded-full hover:bg-gray-200 transition duration-200 flex-shrink-0"
+              >
+                <ExternalLink size={14} className="md:w-4" />
+                Live
+              </a>
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-black/70 border border-white/30 text-sm md:text-base rounded-full hover:bg-black transition duration-200 flex-shrink-0"
+              >
+                <Github size={14} className="md:w-4" />
+                Code
+              </a>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      </div>
-    </motion.div>
-  ))}
+        </div>
+      </motion.div>
+    );
+  })}
 </div>
         ) : (
           // Carousel layout - Mobile Adjusted
@@ -370,13 +397,33 @@ export function ProjectsSection() {
               transition={{ delay: 0.3 + index * 0.08 }}
               className="text-white"
             >
-              <h3 className="text-2xl font-semibold mb-2 transition-all duration-300 group-hover:mb-3 group-hover:-translate-y-1 [text-shadow:_0_1px_4px_rgba(0,0,0,0.5)]">
+              {/* Title with mobile expand functionality */}
+              <h3 
+                className="text-2xl font-semibold mb-2 transition-all duration-300 group-hover:mb-3 group-hover:-translate-y-1 [text-shadow:_0_1px_4px_rgba(0,0,0,0.5)] md:line-clamp-none"
+                onClick={() => isMobile && setIsExpanded(!isExpanded)}
+              >
                 {project.title}
               </h3>
 
-              <p className="text-gray-300 mb-4 transition-all duration-300 group-hover:text-gray-100 group-hover:mb-5 group-hover:-translate-y-0.5 [text-shadow:_0_1px_3px_rgba(0,0,0,0.6)]">
-                {project.description}
-              </p>
+              {/* Description with mobile expand functionality */}
+              <div 
+                className={`relative ${isMobile ? 'cursor-pointer' : ''}`}
+                onClick={() => isMobile && setIsExpanded(!isExpanded)}
+              >
+                <p className={`
+                  text-gray-300 mb-4 transition-all duration-300 
+                  group-hover:text-gray-100 group-hover:mb-5 
+                  group-hover:-translate-y-0.5 [text-shadow:_0_1px_3px_rgba(0,0,0,0.6)]
+                  ${isMobile && !isExpanded ? 'line-clamp-3' : ''}
+                `}>
+                  {project.description}
+                </p>
+                {isMobile && !isExpanded && (
+                  <div className="absolute bottom-0 right-0 shadow-lg rounded-full w-1/3 h-6 flex items-center justify-end p-4">
+                    <ChevronDown className="w-4 h-4" />
+                  </div>
+                )}
+              </div>
 
               <div className="flex flex-wrap gap-2 mb-4 transition-all duration-300 group-hover:mb-5">
                 {project.techstack.map((tech) => (
