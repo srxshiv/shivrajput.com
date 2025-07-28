@@ -15,7 +15,7 @@ const projects = [
     image:
       "https://res.cloudinary.com/ddyehcaeo/image/upload/v1753271374/Screenshot_2025-07-23_at_5.19.20_PM_gkuvmm.png",
     description:
-      "A conversational AI chatbot builder using Gemini API with full authentication and analytics.",
+      "An AI-driven interview prep app that simulates real-time call interviews, dynamically generating follow-up questions based on your responses. After the session, it provides structured feedback and performance insights to help you improve confidently.",
     techstack: [
       "Next.js",
       "React",
@@ -33,7 +33,7 @@ const projects = [
     image:
       "https://res.cloudinary.com/ddyehcaeo/image/upload/v1753271528/IMG_0490_md8el5.jpg",
     description:
-      "A student collaboration platform with live chat, updates, and community sharing features.",
+      "A college-exclusive marketplace platform where students can buy/sell items, offer freelance services, and chat in real-time. Features include official university email verification, OTP-based login, image uploads, and a seamless user experience. Deployed on a VPS",
     techstack: [
       "React",
       "MongoDB",
@@ -51,7 +51,7 @@ const projects = [
     image:
       "https://res.cloudinary.com/ddyehcaeo/image/upload/v1753394494/Screenshot_2025-07-25_at_3.20.32_AM_l33ytb.png",
     description:
-      "Track every income, expense, and budget in a way that actually makes sense.",
+      "A personal finance visualizer that helps users track spending through intuitive pie charts and graphs. It supports setting budgets, adding transactions, and categorizing expenses for clear, organized financial insights.",
     techstack: [
       "Next.js",
       "React",
@@ -105,6 +105,8 @@ export function ProjectsSection() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: false, margin: "-100px" });
 
+  const [activeIndex, setActiveIndex] = useState(0);
+
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
@@ -124,6 +126,7 @@ export function ProjectsSection() {
       window.removeEventListener('resize', handleResize);
     } 
   }, []);
+  
 
   const allTechs = Array.from(
     new Set(projects.flatMap((project) => project.techstack))
@@ -201,7 +204,6 @@ export function ProjectsSection() {
                 >
                   <span className="text-sm md:text-lg">{techIcons[tech] || "🔧"}</span>
                   <span>{tech}</span>
-                  {/* {!isMobile && <span>{tech}</span>} */}
                 </button>
               );
             })}
@@ -248,207 +250,193 @@ export function ProjectsSection() {
         {/* Projects Display - Mobile Adjusted */}
         {showAllProjects ? (
           // Grid layout for all projects - Mobile Adjusted
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 px-2 md:px-6 lg:px-12">
-            {filteredProjects.map((project, index) => (
-              <motion.div
-                key={`${project.title}-${index}`}
-                initial={{ opacity: 0, y: 50 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 + index * 0.08 }}
-                whileHover={{ y: isMobile ? 0 : -8 }}
-                className="group/item relative h-[300px] md:h-[400px] rounded-xl md:rounded-2xl overflow-hidden transition-transform duration-300 ease-out"
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 px-2 md:px-6 lg:px-12">
+  {filteredProjects.map((project, index) => (
+    <motion.div
+      key={`${project.title}-${index}`}
+      initial={{ opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: 0.2 + index * 0.08 }}
+      whileHover={{ y: isMobile ? 0 : -8 }}
+      className="group/item relative h-[300px] md:h-[400px] rounded-xl md:rounded-2xl overflow-hidden transition-transform duration-300 ease-out"
+    >
+      <img
+        src={project.image}
+        alt={project.title}
+        className="absolute inset-0 w-full h-full object-cover transition-all duration-500 filter blur-sm group-hover/item:blur-none group-hover/item:scale-105"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent transition-all duration-500 group-hover/item:bg-black/60" />
+
+      <div className="absolute bottom-0 left-0 right-0 p-6 transition-padding duration-300 group-hover/item:pb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.3 + index * 0.08 }}
+          className="text-white"
+        >
+          <h3 className="text-2xl font-semibold mb-2 transition-all duration-300 group-hover/item:mb-3 group-hover/item:-translate-y-1 [text-shadow:_0_1px_4px_rgba(0,0,0,0.5)]">
+            {project.title}
+          </h3>
+
+          <p className="text-black-300/90 mb-4 transition-all duration-300 group-hover:text-white group-hover:mb-5 group-hover:-translate-y-0.5 [text-shadow:_0_1px_3px_rgba(0,0,0,0.7)]">
+            {project.description}
+          </p>
+
+          <div className="flex flex-wrap gap-2 mb-4 transition-all duration-300 group-hover/item:mb-5">
+            {project.techstack.map((tech) => (
+              <span
+                key={tech}
+                className="px-3 py-1 rounded-full bg-white/10 backdrop-blur text-xs transition-colors duration-300 group-hover/item:bg-white/20"
               >
-               <img
-                  src={project.image}
-                  alt={project.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover/item:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition duration-300 group-hover/item:via-black/20" />
-
-                <div className="absolute bottom-0 left-0 right-0 p-6 transition-padding duration-300 group-hover/item:pb-8">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: 0.3 + index * 0.08 }}
-                    className="text-white"
-                  >
-                    <h3 className="text-2xl font-semibold mb-2 transition-all duration-300 group-hover/item:mb-3 group-hover/item:-translate-y-1">
-                      {project.title}
-                    </h3>
-
-                    <p className="text-gray-300 mb-4 transition-all duration-300 group-hover/item:text-gray-100 group-hover/item:mb-5 group-hover/item:-translate-y-0.5">
-                      {project.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2 mb-4 transition-all duration-300 group-hover/item:mb-5">
-                      {project.techstack.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-3 py-1 rounded-full bg-white/10 backdrop-blur text-xs transition-colors duration-300 group-hover/item:bg-white/20"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : {}}
-                      transition={{ delay: 0.3 + index * 0.08 + 0.2 }}
-                      className="flex gap-4 opacity-0 group-hover/item:opacity-100 translate-y-2 group-hover/item:translate-y-0 transition-all duration-300"
-                    >
-                      <a
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition duration-200"
-                      >
-                        <ExternalLink size={16} />
-                        Live
-                      </a>
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-4 py-2 bg-black/50 border border-white/30 rounded-full hover:bg-black/70 transition duration-200"
-                      >
-                        <Github size={16} />
-                        Code
-                      </a>
-                    </motion.div>
-                  </motion.div>
-                </div>
-              </motion.div>
+                {tech}
+              </span>
             ))}
           </div>
-        ) : (
-          // Carousel layout - Mobile Adjusted
-          <div className="relative px-2 md:px-0">
-            {/* Left Arrow */}
-            <button 
-              onClick={() => {
-                if (carouselRef.current) {
-                  carouselRef.current.scrollBy({
-                    left: -carouselRef.current.offsetWidth * 0.8,
-                    behavior: 'smooth'
-                  });
-                }
-              }}
-              className="flex absolute left-0 md:left-2 top-1/2 -translate-y-1/2 z-20 p-1 rounded-full border border-black/10 dark:border-white/10 shadow-lg hover:bg-white dark:hover:bg-black transition-colors duration-200"
-              aria-label="Previous project"
-            >
-              <ChevronLeft size={24} className="text-black dark:text-white drop-shadow" />
-            </button>
 
-            {/* Carousel Content */}
-            <div
-              ref={carouselRef}
-              className="flex overflow-x-auto scrollbar-hide pb-4 md:pb-6 gap-4 md:gap-6 snap-x snap-mandatory"
-            >
-              {filteredProjects.map((project, index) => (
-                <motion.div
-                  key={`${project.title}-${index}`}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-                  className="group relative flex-shrink-0 w-[85vw] md:w-[50vw] lg:w-[40vw] xl:w-[35vw] snap-start transform-gpu transition-transform duration-300 will-change-transform hover:-translate-y-1 shadow-[0_0_15px_#ffffff10] hover:shadow-[0_0_20px_#ffffff30]"
-                >
-                  <div className="relative h-[50vh] md:h-[60vh] rounded-xl md:rounded-2xl overflow-hidden shadow-md transition-all duration-300 group-hover:shadow-lg">
-                  <img
-                  src={project.image}
-                  alt={project.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover/item:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition duration-300 group-hover/item:via-black/20" />
-
-                <div className="absolute bottom-0 left-0 right-0 p-6 transition-padding duration-300 group-hover/item:pb-8">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: 0.3 + index * 0.08 }}
-                    className="text-white"
-                  >
-                    <h3 className="text-2xl font-semibold mb-2 transition-all duration-300 group-hover/item:mb-3 group-hover/item:-translate-y-1">
-                      {project.title}
-                    </h3>
-
-                    <p className="text-gray-300 mb-4 transition-all duration-300 group-hover/item:text-gray-100 group-hover/item:mb-5 group-hover/item:-translate-y-0.5">
-                      {project.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2 mb-4 transition-all duration-300 group-hover/item:mb-5">
-                      {project.techstack.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-3 py-1 rounded-full bg-white/10 backdrop-blur text-xs transition-colors duration-300 group-hover/item:bg-white/20"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : {}}
-                      transition={{ delay: 0.3 + index * 0.08 + 0.2 }}
-                      className="flex gap-4 opacity-0 group-hover/item:opacity-100 translate-y-2 group-hover/item:translate-y-0 transition-all duration-300"
-                    >
-                      <a
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition duration-200"
-                      >
-                        <ExternalLink size={16} />
-                        Live
-                      </a>
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-4 py-2 bg-black/50 border border-white/30 rounded-full hover:bg-black/70 transition duration-200"
-                      >
-                        <Github size={16} />
-                        Code
-                      </a>
-                    </motion.div>
-                  </motion.div>
-                </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Right Arrow */}
-            <button 
-              onClick={() => {
-                if (carouselRef.current) {
-                  carouselRef.current.scrollBy({
-                    left: carouselRef.current.offsetWidth * 0.8,
-                    behavior: 'smooth'
-                  });
-                }
-              }}
-              className="flex absolute right-0 md:right-2 top-1/2 -translate-y-1/2 z-20 p-1 rounded-full border border-black/10 dark:border-white/10  shadow-lg hover:bg-white dark:hover:bg-black transition-colors duration-200"
-              aria-label="Next project"
-            >
-              <ChevronRight size={24} className="text-black dark:text-white drop-shadow" />
-            </button>
-          </div>
-        )}
-
-        {/* No projects found message */}
-        {filteredProjects.length === 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-center py-12 md:py-16"
+            transition={{ delay: 0.3 + index * 0.08 + 0.2 }}
+            className="flex gap-4 opacity-0 group-hover/item:opacity-100 translate-y-2 group-hover/item:translate-y-0 transition-all duration-300"
           >
-            <p className="text-gray-500 text-base md:text-lg">
-              No projects found with the selected technologies.
-            </p>
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition duration-200"
+            >
+              <ExternalLink size={16} />
+              Live
+            </a>
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 bg-black/50 border border-white/30 rounded-full hover:bg-black transition duration-200"
+            >
+              <Github size={16} />
+              Code
+            </a>
           </motion.div>
+        </motion.div>
+      </div>
+    </motion.div>
+  ))}
+</div>
+        ) : (
+          // Carousel layout - Mobile Adjusted
+<div className="relative px-2 md:px-0">
+  {/* Left Arrow */}
+  <button 
+    onClick={() => {
+      if (carouselRef.current) {
+        carouselRef.current.scrollBy({
+          left: -carouselRef.current.offsetWidth * 0.8,
+          behavior: 'smooth'
+        });
+      }
+    }}
+    className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full border border-black/10 dark:border-white/10 shadow-lg hover:bg-white dark:hover:bg-black transition-colors duration-200"
+    aria-label="Previous project"
+  >
+    <ChevronLeft size={24} className="text-black dark:text-white drop-shadow" />
+  </button>
+
+  {/* Carousel Content */}
+  <div
+    ref={carouselRef}
+    className="flex overflow-x-auto scrollbar-hide pb-4 md:pb-6 gap-4 md:gap-6 snap-x snap-mandatory pl-[5vw] md:pl-0"
+  >
+    {filteredProjects.map((project, index) => (
+      <motion.div
+        key={`${project.title}-${index}`}
+        initial={{ opacity: 0, y: 50 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+        className="group relative flex-shrink-0 w-[85vw] md:w-[50vw] lg:w-[40vw] xl:w-[35vw] snap-start transform-gpu transition-all duration-300 will-change-transform hover:scale-[1.02]"
+      >
+        <div className="relative h-[50vh] md:h-[60vh] rounded-xl md:rounded-2xl overflow-hidden shadow-md transition-all duration-300 group-hover:shadow-lg">
+          <img
+            src={project.image}
+            alt={project.title}
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent transition-all duration-500 group-hover:bg-black/60" />
+
+          <div className="absolute bottom-0 left-0 right-0 p-6 transition-all duration-300 group-hover:pb-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.3 + index * 0.08 }}
+              className="text-white"
+            >
+              <h3 className="text-2xl font-semibold mb-2 transition-all duration-300 group-hover:mb-3 group-hover:-translate-y-1 [text-shadow:_0_1px_4px_rgba(0,0,0,0.5)]">
+                {project.title}
+              </h3>
+
+              <p className="text-gray-300 mb-4 transition-all duration-300 group-hover:text-gray-100 group-hover:mb-5 group-hover:-translate-y-0.5 [text-shadow:_0_1px_3px_rgba(0,0,0,0.6)]">
+                {project.description}
+              </p>
+
+              <div className="flex flex-wrap gap-2 mb-4 transition-all duration-300 group-hover:mb-5">
+                {project.techstack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1 rounded-full bg-white/10 backdrop-blur text-xs transition-colors duration-300 group-hover:bg-white/20"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.3 + index * 0.08 + 0.2 }}
+                className="flex gap-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
+              >
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition duration-200"
+                >
+                  <ExternalLink size={16} />
+                  Live
+                </a>
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 bg-black/50 border border-white/30 rounded-full hover:bg-black/70 transition duration-200"
+                >
+                  <Github size={16} />
+                  Code
+                </a>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </motion.div>
+    ))}
+  </div>
+
+  {/* Right Arrow */}
+  <button 
+    onClick={() => {
+      if (carouselRef.current) {
+        carouselRef.current.scrollBy({
+          left: carouselRef.current.offsetWidth * 0.8,
+          behavior: 'smooth'
+        });
+      }
+    }}
+    className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full border border-black/10 dark:border-white/10 shadow-lg hover:bg-white dark:hover:bg-black transition-colors duration-200"
+    aria-label="Next project"
+  >
+    <ChevronRight size={24} className="text-black dark:text-white drop-shadow" />
+  </button>
+</div>
         )}
       </div>
     </section>
