@@ -33,7 +33,7 @@ const projects = [
     image:
       "https://res.cloudinary.com/ddyehcaeo/image/upload/v1753271528/IMG_0490_md8el5.jpg",
     description:
-      "A college-exclusive marketplace platform where students can buy/sell items, offer freelance services, and chat in real-time. Features include official university email verification, OTP-based login, image uploads, and a seamless user experience. Deployed on a VPS",
+      "A college-exclusive marketplace platform where students can buy/sell items, offer freelance services, and chat in real-time. Features include official university email verification, OTP-based login, image uploads, and a seamless user experience. Deployed on a VPS. Test it out - test@muj.manipal.edu pass-123456",
     techstack: [
       "React",
       "MongoDB",
