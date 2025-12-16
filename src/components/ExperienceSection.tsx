@@ -19,8 +19,8 @@ const experiences = [
     tech: ["React", "JavaScript", "Tailwind CSS", "HTML5", "CSS3"],
   },
   {
-    company: "Local Medical Clinic",
-    position: "Freelance Full Stack Developer",
+    company: "Harshey Health Care Hospital",
+    position: "Full Stack Developer",
     duration: "Dec 2022 - Jan 2023",
     location: "Remote",
     description:
