@@ -14,6 +14,30 @@ import '../App.css'
 
 const projects = [
   {
+    title: "Devora",
+    // TODO: Replace this image URL with a screenshot of your Devora dashboard
+    image:
+      "https://res.cloudinary.com/ddyehcaeo/image/upload/v1765887179/Screenshot_2025-12-16_at_5.40.07_PM_dmtbc3.png", 
+    description:
+      "A centralized developer portfolio aggregator that visualizes cross-platform data (GitHub & LeetCode) to create a dynamic 'proof-of-work' profile. It features automated data synchronization using GraphQL, SEO-friendly dynamic routing, and a high-performance database schema.",
+    techstack: [
+      "Next.js",
+      "TypeScript",
+      "PostgreSQL",
+      "Prisma",
+      "GraphQL",
+      "Tailwind",
+    ],
+    github: "https://github.com/SSharma1103/devora",
+    live: "https://devora-six.vercel.app/",
+    features: [
+      "GitHub & LeetCode data visualization",
+      "Automated data synchronization",
+      "SEO-friendly dynamic routing",
+      "Secure OAuth authentication"
+    ]
+  },
+  {
     title: "Heyllo.ai",
     image:
       "https://res.cloudinary.com/ddyehcaeo/image/upload/v1753271374/Screenshot_2025-07-23_at_5.19.20_PM_gkuvmm.png",
@@ -113,6 +137,9 @@ const techIcons = {
   "Node.js": "🟢",
   Express: "🚂",
   MongoDB: "🍃",
+  PostgreSQL: "🐘",
+  Prisma: "💎",
+  GraphQL: "🕸️",
   TypeScript: "🔷",
   JavaScript: "🟨",
   Firebase: "🔥",

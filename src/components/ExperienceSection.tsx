@@ -5,13 +5,32 @@ import { Building, Calendar, MapPin } from "lucide-react";
 
 const experiences = [
   {
-    company: "Freelance Gig",
-    position: "Website Developer",
-    duration: "2022 - 2022",
+    company: "Self-Employed / Client",
+    position: "Freelance Web Developer",
+    duration: "Oct 2023 - Nov 2023",
     location: "Remote",
-    description: "Created a Portfolio Website for a client ",
-    achievements: ["Only using Vanila html , css and javascript"],
-    tech: ["Html", "CSS", "javascript"],
+    description:
+      "Designed and deployed a responsive personal portfolio website tailored to specific client requirements, focusing on visual hierarchy and performance.",
+    achievements: [
+      "Developed dynamic project showcases to effectively highlight client work samples.",
+      "Integrated functional contact forms with validation for seamless communication.",
+      "Ensured full mobile responsiveness and cross-browser compatibility across devices."
+    ],
+    tech: ["React", "JavaScript", "Tailwind CSS", "HTML5", "CSS3"],
+  },
+  {
+    company: "Local Medical Clinic",
+    position: "Freelance Full Stack Developer",
+    duration: "Dec 2022 - Jan 2023",
+    location: "Remote",
+    description:
+      "Engineered a comprehensive Clinic Management System supporting 2–3 doctors and managing 200+ patient records to digitize daily operations.",
+    achievements: [
+      "Implemented secure token-based authentication for patient management, significantly reducing manual scheduling time.",
+      "Designed RESTful APIs to optimize database operations for medical histories and billing.",
+      "Achieved sub-200ms data retrieval speeds through optimized MongoDB queries."
+    ],
+    tech: ["ReactJS", "Express.js", "MongoDB", "Node.js", "REST APIs"],
   },
 ];
 
@@ -31,7 +50,11 @@ export function ExperienceSection() {
   }, []);
 
   return (
-    <section id="experience" ref={ref} className="relative min-h-[100vh] py-32 px-6 overflow-hidden">
+    <section
+      id="experience"
+      ref={ref}
+      className="relative min-h-[100vh] py-32 px-6 overflow-hidden"
+    >
       <div className="max-w-4xl mx-auto">
         {/* Title Section */}
         <h2
@@ -59,7 +82,7 @@ export function ExperienceSection() {
               }`}
             >
               {/* Timeline dot */}
-              <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-accent-blue rounded-full border-4 border-surface shadow-lg z-10"></div>
+              <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-500 rounded-full border-4 border-white dark:border-gray-900 shadow-lg z-10"></div>
 
               {/* Content */}
               <div
@@ -69,19 +92,19 @@ export function ExperienceSection() {
               >
                 <motion.div
                   whileHover={{ scale: 1.02, y: -5 }}
-                  className="bg-surface border border-border rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300"
+                  className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300"
                 >
                   <div className="flex flex-wrap items-start justify-between mb-4">
                     <div>
-                      <h3 className="text-xl font-semibold text-text-primary mb-1">
+                      <h3 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-1">
                         {exp.position}
                       </h3>
-                      <div className="flex items-center gap-2 text-accent-blue font-medium mb-2">
+                      <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-medium mb-2">
                         <Building size={16} />
                         {exp.company}
                       </div>
                     </div>
-                    <div className="text-sm text-text-secondary">
+                    <div className="text-sm text-zinc-500 dark:text-zinc-400">
                       <div className="flex items-center gap-1 mb-1">
                         <Calendar size={14} />
                         {exp.duration}
@@ -93,21 +116,21 @@ export function ExperienceSection() {
                     </div>
                   </div>
 
-                  <p className="text-text-secondary leading-relaxed mb-6">
+                  <p className="text-zinc-600 dark:text-zinc-300 leading-relaxed mb-6">
                     {exp.description}
                   </p>
 
                   <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-text-primary mb-3 uppercase tracking-wide">
+                    <h4 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-3 uppercase tracking-wide">
                       Key Achievements
                     </h4>
                     <ul className="space-y-2">
                       {exp.achievements.map((achievement, i) => (
                         <li
                           key={i}
-                          className="flex items-start gap-2 text-text-secondary"
+                          className="flex items-start gap-2 text-zinc-600 dark:text-zinc-300"
                         >
-                          <span className="w-1.5 h-1.5 bg-accent-blue rounded-full mt-2 flex-shrink-0"></span>
+                          <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></span>
                           {achievement}
                         </li>
                       ))}
@@ -115,14 +138,14 @@ export function ExperienceSection() {
                   </div>
 
                   <div>
-                    <h4 className="text-sm font-semibold text-text-primary mb-3 uppercase tracking-wide">
+                    <h4 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-3 uppercase tracking-wide">
                       Technologies
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {exp.tech.map((tech) => (
                         <span
                           key={tech}
-                          className="px-3 py-1 text-sm bg-surface-secondary text-text-secondary rounded-full border border-border"
+                          className="px-3 py-1 text-sm bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 rounded-full border border-zinc-200 dark:border-zinc-700"
                         >
                           {tech}
                         </span>

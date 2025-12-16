@@ -104,7 +104,7 @@ export function HeroSection() {
         {/* CV Download Button - Mobile Adjusted */}
         <div className="absolute top-[5vh] md:top-[6vh] right-3 md:right-5 transform md:-translate-x-1/2 z-30">
           <a
-            href="https://drive.google.com/file/d/1WhyRuLk5zqbm-JvjEcVx7-rJP3fah3OS/view?usp=share_link"
+            href="https://drive.google.com/file/d/1LjX6LSBhh8HsbM_d_1xdCIaGw7tJ795f/view?usp=share_link"
             target="_blank"
             className="bg-emerald-400/80 hover:bg-emerald-600 text-black dark:text-white px-3 py-2 md:px-5 md:py-2 rounded-lg text-sm md:text-base font-medium shadow transition duration-300 hover:shadow-lg hover:shadow-emerald-400/60"
           >
