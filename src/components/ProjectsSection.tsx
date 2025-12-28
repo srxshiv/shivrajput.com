@@ -15,7 +15,6 @@ import '../App.css'
 const projects = [
   {
     title: "Devora",
-    // TODO: Replace this image URL with a screenshot of your Devora dashboard
     image:
       "https://res.cloudinary.com/ddyehcaeo/image/upload/v1765887179/Screenshot_2025-12-16_at_5.40.07_PM_dmtbc3.png", 
     description:
@@ -61,6 +60,20 @@ const projects = [
       "Progress tracking dashboard"
     ]
   },
+  {
+    title: "Wispr Flow",
+    image: "https://res.cloudinary.com/ddyehcaeo/image/upload/v1766927655/Screenshot_2025-12-28_at_6.43.16_PM_ydntxb.png", 
+    description:
+      "A desktop-native voice-to-text application that enables real-time transcription directly into any active input field. It leverages Tauri to bridge a React frontend with a Rust backend, handling system-level tasks like global hotkey management (Option+K), OS accessibility permissions, and simulated keyboard events for seamless dictation.",
+    techstack: [
+      "Tauri",
+      "Rust",
+      "React",
+      "TypeScript",
+      "Web Audio API",
+    ],
+    github: "https://github.com/srxshiv/wispr_flow_tauri.git",
+},
   {
     title: "Uniwizz",
     image:
@@ -149,6 +162,9 @@ const techIcons = {
   shadcn: "🧩",
   "LLM/AI-Integration": "🧠",
   Redux: "📦",
+  Rust: "🦀",
+  Tauri: "♉",
+  "Web Audio API": "🔊", 
 };
 
 export function ProjectsSection() {
