@@ -14,11 +14,11 @@ import '../App.css'
 
 const projects = [
   {
-    title: "Devora",
+    title: "DevsOwl",
     image:
-      "https://res.cloudinary.com/ddyehcaeo/image/upload/v1765887179/Screenshot_2025-12-16_at_5.40.07_PM_dmtbc3.png", 
+      "https://res.cloudinary.com/ddyehcaeo/image/upload/v1771333552/z8hginpogt2glymf9sle.png", 
     description:
-      "A centralized developer portfolio aggregator that visualizes cross-platform data (GitHub & LeetCode) to create a dynamic 'proof-of-work' profile. It features automated data synchronization using GraphQL, SEO-friendly dynamic routing, and a high-performance database schema.",
+      "A centralized developer portfolio aggregator that visualizes cross-platform data (GitHub, leetcode etc.) to create a dynamic 'proof-of-work' profile. It features automated data synchronization using GraphQL, SEO-friendly dynamic routing, and a high-performance database schema.",
     techstack: [
       "Next.js",
       "TypeScript",
@@ -28,9 +28,9 @@ const projects = [
       "Tailwind",
     ],
     github: "https://github.com/SSharma1103/devora",
-    live: "https://devora-six.vercel.app/",
+    live: "https://devsowl.com/",
     features: [
-      "GitHub & LeetCode data visualization",
+      "GitHub Open Source & LeetCode data visualization",
       "Automated data synchronization",
       "SEO-friendly dynamic routing",
       "Secure OAuth authentication"
