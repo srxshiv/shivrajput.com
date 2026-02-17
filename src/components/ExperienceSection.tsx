@@ -5,20 +5,6 @@ import { Building, Calendar, MapPin } from "lucide-react";
 
 const experiences = [
   {
-    company: "Self-Employed / Client",
-    position: "Freelance Web Developer",
-    duration: "Oct 2023 - Nov 2023",
-    location: "Remote",
-    description:
-      "Designed and deployed a responsive personal portfolio website tailored to specific client requirements, focusing on visual hierarchy and performance.",
-    achievements: [
-      "Developed dynamic project showcases to effectively highlight client work samples.",
-      "Integrated functional contact forms with validation for seamless communication.",
-      "Ensured full mobile responsiveness and cross-browser compatibility across devices."
-    ],
-    tech: ["React", "JavaScript", "Tailwind CSS", "HTML5", "CSS3"],
-  },
-  {
     company: "Harshey Health Care Hospital",
     position: "Full Stack Developer",
     duration: "Dec 2022 - Jan 2023",
@@ -32,7 +18,42 @@ const experiences = [
     ],
     tech: ["ReactJS", "Express.js", "MongoDB", "Node.js", "REST APIs"],
   },
+  {
+    company: "Messy Programmer",
+    position: "AI Fullstack Developer",
+    duration: "Jan 2026 - Present",
+    location: "Cooch Behar, West Bengal",
+    description:
+      "Building high-performance AI-driven fullstack applications end-to-end using a TypeScript-first stack with modern cloud and automation tooling.",
+    achievements: [
+      "Engineered scalable fullstack apps using Next.js, React, Node.js, and TypeScript, with Dockerized services for consistent deployments.",
+      "Architected backend systems with PostgreSQL, MongoDB, and Firebase, implementing secure OAuth 2.0 authentication and data workflows.",
+      "Developed complex workflow automations using n8n, Zapier, and Pipedream with custom APIs and webhooks.",
+      "Integrated GoHighLevel ecosystems and built internal tools using Retool, Payload CMS, and Directus.",
+      "Built and deployed cross-platform mobile apps using React Native."
+    ],
+    tech: [
+      "Next.js",
+      "React",
+      "Node.js",
+      "TypeScript",
+      "PostgreSQL",
+      "MongoDB",
+      "Firebase",
+      "Docker",
+      "OAuth 2.0",
+      "n8n",
+      "Zapier",
+      "Pipedream",
+      "GoHighLevel",
+      "Retool",
+      "Payload CMS",
+      "Directus",
+      "React Native"
+    ],
+  },
 ];
+
 
 export function ExperienceSection() {
   const ref = useRef(null);
