@@ -1,33 +1,32 @@
 import { Github, Linkedin, Instagram, Twitter } from "lucide-react";
 import { useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import "../App.css";
 
 export function HeroSection() {
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
   const [animationsComplete, setAnimationsComplete] = useState(false);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+  // Directly track the window scroll position with Framer Motion
+  const { scrollY } = useScroll();
+  
+  // Transform scroll position to specific vertical/horizontal shifts
+  const yName = useTransform(scrollY, [0, 1000], [0, -300]);
+  const xAboutDesktop = useTransform(scrollY, [0, 1000], [0, -400]);
+  const yAvatar = useTransform(scrollY, [0, 1000], [0, 200]);
+  const ySocialsDesktop = useTransform(scrollY, [0, 1000], [0, 300]);
 
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
     window.addEventListener("resize", handleResize);
-
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
 
     const timer = setTimeout(() => {
       setAnimationsComplete(true);
     }, 1300);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
       clearTimeout(timer);
     };
@@ -37,71 +36,31 @@ export function HeroSection() {
     <>
       <style>{`
         @keyframes slideInFromTop {
-          0% {
-            transform: translateY(-40vh);
-            opacity: 0;
-          }
-          100% {
-            transform: translateY(0);
-            opacity: 1;
-          }
+          0% { transform: translateY(-40vh); opacity: 0; }
+          100% { transform: translateY(0); opacity: 1; }
         }
-
         @keyframes slideInFromLeft {
-          0% {
-            transform: translateX(-100%);
-            opacity: 0;
-          }
-          100% {
-            transform: translateX(0);
-            opacity: 1;
-          }
+          0% { transform: translateX(-100%); opacity: 0; }
+          100% { transform: translateX(0); opacity: 1; }
         }
-
         @keyframes slideInFromBottom {
-          0% {
-            transform: translateY(40%);
-            opacity: 0;
-          }
-          100% {
-            transform: translateY(0);
-            opacity: 1;
-          }
+          0% { transform: translateY(40%); opacity: 0; }
+          100% { transform: translateY(0); opacity: 1; }
         }
-
         @keyframes slideInFromRight {
-          0% {
-            transform: translate(100%, -50%);
-            opacity: 0;
-          }
-          100% {
-            transform: translate(0, -50%);
-            opacity: 1;
-          }
+          0% { transform: translate(100%, -50%); opacity: 0; }
+          100% { transform: translate(0, -50%); opacity: 1; }
         }
-
-        .animate-slide-top {
-          animation: slideInFromTop 1s ease-out forwards;
-        }
-
-        .animate-slide-left {
-          animation: slideInFromLeft 1s ease-out forwards;
-        }
-
-        .animate-slide-bottom {
-          animation: slideInFromBottom 1.2s ease-out forwards;
-        }
-
-        .animate-slide-right {
-          animation: slideInFromRight 1.1s ease-out forwards;
-        }
+        .animate-slide-top { animation: slideInFromTop 1s ease-out forwards; }
+        .animate-slide-left { animation: slideInFromLeft 1s ease-out forwards; }
+        .animate-slide-bottom { animation: slideInFromBottom 1.2s ease-out forwards; }
+        .animate-slide-right { animation: slideInFromRight 1.1s ease-out forwards; }
       `}</style>
 
       <section
         id="home"
         className="relative min-h-screen flex items-center justify-center overflow-hidden transition-colors duration-500"
       >
-        {/* CV Download Button - Mobile Adjusted */}
         <div className="absolute top-[5vh] md:top-[6vh] right-3 md:right-5 transform md:-translate-x-1/2 z-30">
           <a
             href="https://drive.google.com/file/d/1duCXXk6CCvQtwsI8yievs73X0xLVqvEc/view?usp=share_link"
@@ -112,28 +71,20 @@ export function HeroSection() {
           </a>
         </div>
 
-        {/* Background Giant Name - Mobile Adjusted */}
-        <h1
+        <motion.h1
           className={`absolute max-sm:top-[40vh] text-[20vw] md:text-[20vw] font-heading3 text-black/15 dark:text-white/15 z-0 select-none tracking-tight leading-none text-center ${
             !animationsComplete ? "animate-slide-top" : ""
           }`}
-          style={{
-            transform: `translateY(-${scrollY * 0.5}px)`,
-            transition: "transform 0.1s ease-out",
-          }}
+          style={{ y: yName }}
         >
           SHIV RAJPUT
-        </h1>
+        </motion.h1>
 
-        {/* Left Side Hover About - Mobile Adjusted */}
-        <div
+        <motion.div
           className={`absolute left-0 top-0 h-full w-full flex items-center z-20 pointer-events-none ${
             !animationsComplete ? "animate-slide-left" : ""
           }`}
-          style={{
-            transform: isMobile ? "none" : `translateX(-${scrollY * 0.5}px)`,
-            transition: "transform 0.1s ease-out",
-          }}
+          style={{ x: isMobile ? 0 : xAboutDesktop }}
         >
           <div
             className="relative ml-4 md:ml-8 pointer-events-auto"
@@ -183,90 +134,39 @@ export function HeroSection() {
                   </div>
                   <div className="ml-4 md:ml-6 space-y-1 md:space-y-2">
                     <div>
-                      <span className="text-blue-600 dark:text-blue-400">
-                        name
-                      </span>
-                      :{" "}
-                      <span className="text-green-600 dark:text-green-400">
-                        "Shiv Rajput"
-                      </span>
-                      ,
+                      <span className="text-blue-600 dark:text-blue-400">name</span>:{" "}
+                      <span className="text-green-600 dark:text-green-400">"Shiv Rajput"</span>,
                     </div>
                     <div>
-                      <span className="text-blue-600 dark:text-blue-400">
-                        role
-                      </span>
-                      :{" "}
-                      <span className="text-green-600 dark:text-green-400">
-                        "Full Stack Developer"
-                      </span>
-                      ,
+                      <span className="text-blue-600 dark:text-blue-400">role</span>:{" "}
+                      <span className="text-green-600 dark:text-green-400">"Full Stack Developer"</span>,
                     </div>
                     <div>
-                      <span className="text-blue-600 dark:text-blue-400">
-                        education
-                      </span>
-                      :{" "}
-                      <span className="text-green-600 dark:text-green-400">
-                        "B.Tech in Computer Science"
-                      </span>
-                      ,
+                      <span className="text-blue-600 dark:text-blue-400">education</span>:{" "}
+                      <span className="text-green-600 dark:text-green-400">"B.Tech in Computer Science"</span>,
                     </div>
                     <div>
-                      <span className="text-blue-600 dark:text-blue-400">
-                        strengths
-                      </span>
-                      :{" "}
-                      <span className="text-green-600 dark:text-green-400">
-                        ["Problem Solving", "Creative Thinking", "Rapid
-                        Prototyping"]
-                      </span>
-                      ,
+                      <span className="text-blue-600 dark:text-blue-400">strengths</span>:{" "}
+                      <span className="text-green-600 dark:text-green-400">["Problem Solving", "Creative Thinking", "Rapid Prototyping"]</span>,
                     </div>
                     <div>
-                      <span className="text-blue-600 dark:text-blue-400">
-                        passion
-                      </span>
-                      :{" "}
-                      <span className="text-green-600 dark:text-green-400">
-                        "Building things from scratch & turning ideas into
-                        products"
-                      </span>
-                      ,
+                      <span className="text-blue-600 dark:text-blue-400">passion</span>:{" "}
+                      <span className="text-green-600 dark:text-green-400">"Building things from scratch & turning ideas into products"</span>,
                     </div>
                     <div>
-                      <span className="text-blue-600 dark:text-blue-400">
-                        location
-                      </span>
-                      :{" "}
-                      <span className="text-green-600 dark:text-green-400">
-                        "India (Remote-Friendly 🌍)"
-                      </span>
-                      ,
+                      <span className="text-blue-600 dark:text-blue-400">location</span>:{" "}
+                      <span className="text-green-600 dark:text-green-400">"India (Remote-Friendly 🌍)"</span>,
                     </div>
                     <div>
-                      <span className="text-blue-600 dark:text-blue-400">
-                        availability
-                      </span>
-                      :{" "}
-                      <span className="text-green-600 dark:text-green-400">
-                        "Open for full-time, freelance, or startup collabs"
-                      </span>
-                      ,
+                      <span className="text-blue-600 dark:text-blue-400">availability</span>:{" "}
+                      <span className="text-green-600 dark:text-green-400">"Open for full-time, freelance, or startup collabs"</span>,
                     </div>
                     <div>
-                      <span className="text-blue-600 dark:text-blue-400">
-                        mission
-                      </span>
-                      :{" "}
-                      <span className="text-green-600 dark:text-green-400">
-                        "To solve real problems with clean code & bold ideas"
-                      </span>
+                      <span className="text-blue-600 dark:text-blue-400">mission</span>:{" "}
+                      <span className="text-green-600 dark:text-green-400">"To solve real problems with clean code & bold ideas"</span>
                     </div>
                   </div>
-                  <div className="text-purple-600 dark:text-purple-400">
-                    {"}"}
-                  </div>
+                  <div className="text-purple-600 dark:text-purple-400">{"}"}</div>
                   <div className="mt-4 md:mt-6 pt-2 md:pt-3 border-t border-emerald-400/20">
                     <div className="text-slate-600 dark:text-slate-400 text-xs md:text-sm">
                       <span className="text-emerald-400">// </span>
@@ -278,55 +178,36 @@ export function HeroSection() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Avatar at Bottom - Mobile Adjusted */}
-        <div
+        <motion.div
           className={`absolute bottom-0 w-full flex justify-center z-10 pointer-events-none ${
             !animationsComplete ? "animate-slide-bottom" : ""
           }`}
-          style={{
-            transform: `translateY(${scrollY * 0.5}px)`,
-            transition: "transform 0.1s ease-out",
-          }}
+          style={{ y: yAvatar }}
         >
           <img
             src="/avatar.png"
             alt="avatar"
             className="h-[60vh] md:h-[75vh] max-w-full object-contain grayscale opacity-90 pointer-events-none"
           />
-        </div>
+        </motion.div>
 
-        {/* Socials - Mobile Adjusted */}
-        <div
-          className={`absolute right-2 md:right-4 top-1/2 z-30 ${
+        <motion.div
+          className={`absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-30 ${
             !animationsComplete ? "animate-slide-right" : ""
           }`}
           style={{
-            transform: isMobile
-              ? "translate(0, -50%)"
-              : `translate(${scrollY * 0.3}px, -50%)`,
-            transition: "transform 0.1s ease-out",
+            y: "-50%",
+            x: isMobile ? 0 : ySocialsDesktop
           }}
         >
           <div className="backdrop-blur-md bg-white/40 dark:bg-white/5 p-2 md:p-4 rounded-lg md:rounded-xl border border-zinc-300 dark:border-white/10 shadow-md flex flex-col items-center space-y-3 md:space-y-6">
             {[
-              {
-                href: "https://github.com/srxshiv",
-                icon: <Github className="w-4 h-4 md:w-5 md:h-5" />,
-              },
-              {
-                href: "https://linkedin.com/in/srxshiv",
-                icon: <Linkedin className="w-4 h-4 md:w-5 md:h-5" />,
-              },
-              {
-                href: "https://instagram.com/srxshiv",
-                icon: <Instagram className="w-4 h-4 md:w-5 md:h-5" />,
-              },
-              {
-                href: "https://twitter.com/srxshiv",
-                icon: <Twitter className="w-4 h-4 md:w-5 md:h-5" />,
-              },
+              { href: "https://github.com/srxshiv", icon: <Github className="w-4 h-4 md:w-5 md:h-5" /> },
+              { href: "https://linkedin.com/in/srxshiv", icon: <Linkedin className="w-4 h-4 md:w-5 md:h-5" /> },
+              { href: "https://instagram.com/srxshiv", icon: <Instagram className="w-4 h-4 md:w-5 md:h-5" /> },
+              { href: "https://twitter.com/srxshiv", icon: <Twitter className="w-4 h-4 md:w-5 md:h-5" /> },
             ].map(({ href, icon }, idx) => (
               <a
                 key={idx}
@@ -338,10 +219,8 @@ export function HeroSection() {
               </a>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
     </>
   );
 }
-
-//

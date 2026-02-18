@@ -1,23 +1,8 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { Building, Calendar, MapPin } from "lucide-react";
 
 const experiences = [
-  {
-    company: "Harshey Health Care Hospital",
-    position: "Full Stack Developer",
-    duration: "Dec 2022 - Jan 2023",
-    location: "Remote",
-    description:
-      "Engineered a comprehensive Clinic Management System supporting 2–3 doctors and managing 200+ patient records to digitize daily operations.",
-    achievements: [
-      "Implemented secure token-based authentication for patient management, significantly reducing manual scheduling time.",
-      "Designed RESTful APIs to optimize database operations for medical histories and billing.",
-      "Achieved sub-200ms data retrieval speeds through optimized MongoDB queries."
-    ],
-    tech: ["ReactJS", "Express.js", "MongoDB", "Node.js", "REST APIs"],
-  },
   {
     company: "Messy Programmer",
     position: "AI Fullstack Developer",
@@ -26,8 +11,8 @@ const experiences = [
     description:
       "Building high-performance AI-driven fullstack applications end-to-end using a TypeScript-first stack with modern cloud and automation tooling.",
     achievements: [
-      "Engineered scalable fullstack apps using Next.js, React, Node.js, and TypeScript, with Dockerized services for consistent deployments.",
-      "Architected backend systems with PostgreSQL, MongoDB, and Firebase, implementing secure OAuth 2.0 authentication and data workflows.",
+      "Engineered scalable fullstack apps using Next.js, React, Node.js, basically the full TypeScript stack, with Dockerized services for consistent deployments.",
+      "Developed backend systems with PostgreSQL, MongoDB, and Firebase, implementing secure OAuth 2.0 authentication and data workflows.",
       "Developed complex workflow automations using n8n, Zapier, and Pipedream with custom APIs and webhooks.",
       "Integrated GoHighLevel ecosystems and built internal tools using Retool, Payload CMS, and Directus.",
       "Built and deployed cross-platform mobile apps using React Native."
@@ -52,23 +37,33 @@ const experiences = [
       "React Native"
     ],
   },
+  {
+    company: "Harshey Health Care Hospital",
+    position: "Full Stack Developer",
+    duration: "Dec 2022 - Jan 2023",
+    location: "Remote",
+    description:
+      "Engineered a comprehensive Clinic Management System supporting 2–3 doctors and managing 200+ patient records to digitize daily operations.",
+    achievements: [
+      "Implemented secure token-based authentication for patient management, significantly reducing manual scheduling time.",
+      "Designed RESTful APIs to optimize database operations for medical histories and billing.",
+      "Achieved sub-200ms data retrieval speeds through optimized MongoDB queries."
+    ],
+    tech: ["ReactJS", "Express.js", "MongoDB", "Node.js", "REST APIs"],
+  },
 ];
-
 
 export function ExperienceSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const [scrollY, setScrollY] = useState(0);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // Maps the scroll progress to an X translation to slide text across the screen
+  const xParallax = useTransform(scrollYProgress, [0, 1], ["-10%", "30%"]);
 
   return (
     <section
@@ -78,17 +73,16 @@ export function ExperienceSection() {
     >
       <div className="max-w-4xl mx-auto">
         {/* Title Section */}
-        <h2
-          className="pointer-events-none absolute right-[140rem] top-0 -translate-x-1/2 text-[30vw] md:text-[20vw] font-heading3 text-black/15 dark:text-white/15 z-0 select-none tracking-tight leading-none"
+        <motion.h2
+          className="pointer-events-none absolute left-0 top-10 text-[30vw] md:text-[20vw] font-heading3 text-black/15 dark:text-white/15 z-0 select-none tracking-tight leading-none whitespace-nowrap"
           style={{
-            transform: `translateX(calc(${scrollY * 1.7}px))`,
-            transition: "transform 0.1s ease-out",
+            x: xParallax
           }}
         >
           EXPERIENCE
-        </h2>
+        </motion.h2>
 
-        <div className="relative md:mt-[10rem] mt-12">
+        <div className="relative md:mt-[10rem] mt-12 z-10">
           {/* Timeline line */}
           <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-0.5 h-full bg-border"></div>
 
@@ -113,7 +107,7 @@ export function ExperienceSection() {
               >
                 <motion.div
                   whileHover={{ scale: 1.02, y: -5 }}
-                  className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300"
+                  className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm border border-zinc-200 dark:border-zinc-800 rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300"
                 >
                   <div className="flex flex-wrap items-start justify-between mb-4">
                     <div>
